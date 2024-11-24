@@ -1,6 +1,6 @@
 
 from abc import ABC, abstractmethod
-from typing import Set
+from typing import Set, Optional
 from dataclasses import dataclass
 from rustworkx import PyGraph
 
@@ -37,15 +37,30 @@ class Difference(Operation):
 
     def __call__(self) -> Set[int]:
         return self.left().difference(self.right())
-    
-
-        
 
 
 @dataclass
 class ComputationalNode:
     compound_operation: Operation
-    id: str
+    id: int
+    children: Optional[Set['ComputationalNode']] = None
+
+class ComputationalTree:
+
+    def __init__(self, pattern: PyGraph, data: PyGraph) -> None:
+        self._pattern = pattern
+        self._data = data
+        self.root: Optional[ComputationalNode] = None
+
+    def matching_order(self) -> list[Set[int]]:
+        return []
+
+    def create(self) -> None:
+        all_matching_orders = self.matching_order()
+        pass
+
+
+
 
 
 def main() -> None:
